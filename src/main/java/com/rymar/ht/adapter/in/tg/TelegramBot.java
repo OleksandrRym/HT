@@ -1,7 +1,7 @@
-package com.rymar.ht.config;
+package com.rymar.ht.adapter.in.tg;
 
-import com.rymar.ht.service.ActivityService;
-import com.rymar.ht.service.ChartGenerator;
+import com.rymar.ht.domain.service.ActivityService;
+import com.rymar.ht.domain.service.ChartGenerator;
 import java.io.InputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MyTelegramBot extends TelegramLongPollingBot {
+public class TelegramBot extends TelegramLongPollingBot {
 
   @Value("${telegram.bot.token}")
   private String token;
@@ -31,26 +31,22 @@ public class MyTelegramBot extends TelegramLongPollingBot {
   @Override
   public void onUpdateReceived(Update update) {
     if (update.hasMessage() && update.getMessage().hasText()) {
-
       String text = update.getMessage().getText();
       Long chatId = update.getMessage().getChatId();
-
-      if (text.equals("/chart")) {
-        sendChart(chatId);
+      String[] strings = text.split(" ");
+      if (strings[0].equals("/chart")) {
+        sendChart(chatId , strings[1]);
       } else {
         sendText(chatId, "Ти написав: " + text);
       }
     }
   }
 
-  private void sendChart(Long chatId) {
-    double[] x = {5, 12, 2, 5, 5};
-    double[] y = {1, 2, 3, 4, 5};
-     var l =  activityService.getActivityByWeek();
+  private void sendChart(Long chatId, String activity) {
+      var l =  activityService.getWeekActivityCount_ByName(activity);
     SendPhoto photo = new SendPhoto();
     photo.setChatId(chatId.toString());
-
-    InputStream chartStream = chartGenerator.generateChart( l , "RUN");
+    InputStream chartStream = chartGenerator.generateChart( l , activity);
     System.out.println(chartStream);
     photo.setPhoto(new InputFile(chartStream, "chart.png"));
 
