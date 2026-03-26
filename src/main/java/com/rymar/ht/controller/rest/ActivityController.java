@@ -1,13 +1,11 @@
-package com.rymar.ht.adapter.in.rest;
+package com.rymar.ht.controller.rest;
 
-import com.rymar.ht.domain.service.ActivityService;
-import com.rymar.ht.domain.service.ChartGenerator;
+import com.rymar.ht.service.ActivityService;
+import com.rymar.ht.service.ChartGenerator;
 import java.io.InputStream;
 
-import jakarta.ws.rs.QueryParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

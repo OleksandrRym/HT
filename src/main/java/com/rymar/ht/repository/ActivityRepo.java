@@ -1,6 +1,6 @@
-package com.rymar.ht.adapter.out.repository;
+package com.rymar.ht.repository;
 
-import com.rymar.ht.domain.entity.Activity;
+import com.rymar.ht.entity.Activity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

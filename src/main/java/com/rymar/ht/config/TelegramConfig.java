@@ -1,6 +1,6 @@
 package com.rymar.ht.config;
 
-import com.rymar.ht.adapter.in.tg.TelegramBot;
+import com.rymar.ht.controller.telegram.TelegramBot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.TelegramBotsApi;

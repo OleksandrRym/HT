@@ -1,11 +1,13 @@
-package com.rymar.ht.domain.entity;
+package com.rymar.ht.entity;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

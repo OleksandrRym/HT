@@ -1,4 +1,4 @@
-package com.rymar.ht.domain.service;
+package com.rymar.ht.service;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;

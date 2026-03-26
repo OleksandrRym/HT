@@ -1,7 +1,7 @@
-package com.rymar.ht.domain.service;
+package com.rymar.ht.service;
 
-import com.rymar.ht.adapter.out.repository.ActivityRepo;
-import com.rymar.ht.domain.entity.Activity;
+import com.rymar.ht.repository.ActivityRepo;
+import com.rymar.ht.entity.Activity;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,13 @@ public class ActivityService {
 
   private static final LocalDateTime WEEK_AGO = LocalDateTime.now().minusDays(7);
   private static final LocalDateTime DAY_AGO = LocalDateTime.now().minusDays(1);
+
+  public void addActivity(String name, Double count){
+      var act = new Activity();
+      act.setName(name);
+      act.setCount_ex(count);
+      activityRepo.save(act);
+  }
 
   public double[] getWeekActivityCount_ByName(String activityName) {
     List<Activity> weakly_activity =

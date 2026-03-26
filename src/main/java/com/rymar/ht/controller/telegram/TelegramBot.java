@@ -1,8 +1,10 @@
-package com.rymar.ht.adapter.in.tg;
+package com.rymar.ht.controller.telegram;
 
-import com.rymar.ht.domain.service.ActivityService;
-import com.rymar.ht.domain.service.ChartGenerator;
+import com.rymar.ht.service.ActivityService;
+import com.rymar.ht.service.ChartGenerator;
 import java.io.InputStream;
+
+import com.rymar.ht.service.TelegramHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,11 +24,10 @@ public class TelegramBot extends TelegramLongPollingBot {
   @Value("${telegram.bot.token}")
   private String token;
 
+  private final TelegramHandler telegramHandler;
+
   @Value("${telegram.bot.username}")
   private String username;
-
-  private final ChartGenerator chartGenerator;
-  private final ActivityService activityService;
 
   @Override
   public void onUpdateReceived(Update update) {
@@ -34,35 +35,7 @@ public class TelegramBot extends TelegramLongPollingBot {
       String text = update.getMessage().getText();
       Long chatId = update.getMessage().getChatId();
       String[] strings = text.split(" ");
-      if (strings[0].equals("/chart")) {
-        sendChart(chatId , strings[1]);
-      } else {
-        sendText(chatId, "Ти написав: " + text);
-      }
-    }
-  }
-
-  private void sendChart(Long chatId, String activity) {
-      var l =  activityService.getWeekActivityCount_ByName(activity);
-    SendPhoto photo = new SendPhoto();
-    photo.setChatId(chatId.toString());
-    InputStream chartStream = chartGenerator.generateChart( l , activity);
-    System.out.println(chartStream);
-    photo.setPhoto(new InputFile(chartStream, "chart.png"));
-
-    try {
-      execute(photo);
-    } catch (TelegramApiException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private void sendText(Long chatId, String text) {
-    SendMessage message = SendMessage.builder().chatId(chatId.toString()).text(text).build();
-    try {
-      execute(message);
-    } catch (TelegramApiException e) {
-      e.printStackTrace();
+      telegramHandler.process(chatId,strings);
     }
   }
 
