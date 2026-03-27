@@ -6,6 +6,7 @@ import com.rymar.ht.service.command.DrawCommand;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class TelegramHandler {
         COMMANDS_MAP.put("/add",addCommand);
     }
 
-    public void process(Long chatId ,String[] cmd){
+    public Message process(Long chatId , String[] cmd){
         var exc = COMMANDS_MAP.get(cmd[0]);
-        exc.execute(chatId,cmd);
+        return exc.execute(chatId,cmd);
     }
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -19,7 +20,7 @@ public class DrawCommand implements Commands {
     private final AbsSender absSender;
 
     @Override
-    public void execute(Long chatId, String[] cmd) {
+    public Message execute(Long chatId, String[] cmd) {
         var l = activityService.getWeekActivityCount_ByName(cmd[0]);
         SendPhoto photo = new SendPhoto();
         photo.setChatId(chatId.toString());
