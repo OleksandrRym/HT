@@ -1,5 +1,6 @@
 package com.rymar.ht.service;
 
+import com.rymar.ht.entity.dto.MessageDto;
 import com.rymar.ht.service.command.AddCommand;
 import com.rymar.ht.service.command.Commands;
 import com.rymar.ht.service.command.DrawCommand;
@@ -24,7 +25,7 @@ public class TelegramHandler {
         COMMANDS_MAP.put("/add",addCommand);
     }
 
-    public Message process(Long chatId , String[] cmd){
+    public MessageDto process(Long chatId , String[] cmd){
         var exc = COMMANDS_MAP.get(cmd[0]);
         return exc.execute(chatId,cmd);
     }
